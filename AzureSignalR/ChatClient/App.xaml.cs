@@ -29,12 +29,16 @@ namespace ChatClient
 
         protected async override void OnSleep()
         {
-            await signalR.LogOut();
+            if (shouldDisconnect == true)
+            {
+                await signalR.LogOut();
+            }
             // Handle when your app sleeps
         }
 
         protected async override void OnResume()
         {
+
             // เช็คได้
             var ResultState = signalR.GetconnectionState();
             //  conid อันเก่า
@@ -42,24 +46,28 @@ namespace ChatClient
             var current = Connectivity.NetworkAccess;
             // connection = null 
 
-            if (SignalRService.connection?.State == HubConnectionState.Disconnected)
+            if (shouldConnect == true)
             {
-                if (current == NetworkAccess.Internet)
+                if (SignalRService.connection?.State == HubConnectionState.Disconnected)
                 {
-                    Debug.WriteLine("NetworkAccess.Internet");
-                    // Connection to internet is available
-                    await signalR.ConnectToUserAsync(name);
+                    if (current == NetworkAccess.Internet)
+                    {
+                        Debug.WriteLine("NetworkAccess.Internet");
+                        // Connection to internet is available
+                        await signalR.ConnectToUserAsync(name);
+                    }
+                    else if (current == NetworkAccess.None)
+                    {
+                        Debug.WriteLine("NetworkAccess.None");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("NetworkAccess.err");
+                    }
+                    // Handle when your app resumes
                 }
-                else if (current == NetworkAccess.None)
-                {
-                    Debug.WriteLine("NetworkAccess.None");
-                }
-                else
-                {
-                    Debug.WriteLine("NetworkAccess.err");
-                }
-                // Handle when your app resumes
             }
+
         }
     }
 }

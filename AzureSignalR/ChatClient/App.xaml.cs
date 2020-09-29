@@ -38,7 +38,6 @@ namespace ChatClient
 
         protected async override void OnResume()
         {
-
             // เช็คได้
             var ResultState = signalR.GetconnectionState();
             //  conid อันเก่า

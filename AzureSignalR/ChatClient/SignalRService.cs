@@ -180,12 +180,12 @@ namespace ChatClient
                 }
                 IsBusy = false;
 
-                connection.On<string, string>("ReceiveMessage", (user, message) =>
-                {
-                    var users = $"{user} SayAll :";
-                    AddNewMessage(users, message);
-                    Debug.WriteLine(message);
-                });
+                //connection.On<string, string>("ReceiveMessage", (user, message) =>
+                //{
+                //    var users = $"{user} SayAll :";
+                //    AddNewMessage(users, message);
+                //    Debug.WriteLine(message);
+                //});
 
 
                 connection.On<string>("Target", (message) =>
@@ -194,12 +194,12 @@ namespace ChatClient
                     Debug.WriteLine(message);
                 });
 
-                connection.On<string, string>("ReceiveMessageToUser", (usersend, message) =>
-                {
-                    var users = $"{usersend}  :";
-                    AddNewMessage(users, message);
-                    Debug.WriteLine(message);
-                });
+                //connection.On<string, string>("ReceiveMessageToUser", (usersend, message) =>
+                //{
+                //    var users = $"{usersend}  :";
+                //    AddNewMessage(users, message);
+                //    Debug.WriteLine(message);
+                //});
 
                 //connection.Reconnecting += async error =>
                 //{

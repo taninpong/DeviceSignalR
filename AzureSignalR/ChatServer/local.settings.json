@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureSignalRConnectionString": "Endpoint=https://signalabfree.service.signalr.net;AccessKey=VLt6AqsLkc2UsDAeK7QsnFN9ChCQ6LErEZnSsBFyVZ0=;Version=1.0;"
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "*",
+    "CORSCredentials": false
+  },
+}

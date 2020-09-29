@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ChatClient.ViewModel"
+             x:Class="ChatClient.MainPage">
+    <StackLayout>
+        <Label Text="Messages"
+               Margin="0,45,0,0"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start" />
+        <Frame OutlineColor="Gray"
+               Margin="10,20,10,0"
+               WidthRequest="500"
+               HeightRequest="500"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start">
+            <ScrollView HorizontalOptions="Start"
+                        VerticalOptions="Start">
+                <StackLayout x:Name="messageList"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Start">
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+        <Grid Margin="20,35,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" >
+                </ColumnDefinition>
+                <ColumnDefinition Width="*" >
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox  x:Name="checkBox1" CheckedChanged="OnCheckBoxCheckedChanged" Grid.Column="0" Grid.Row="0" />
+            <Label Text="Resume แอพแล้วให้ SignalR  Connect " VerticalOptions="Center" Grid.Column="1" Grid.Row="0" />
+
+            <CheckBox x:Name="checkBox2" CheckedChanged="OnCheckBoxCheckedChanged2" Grid.Column="0" Grid.Row="1" />
+            <Label Text="ย่อแอพแล้วไม่ให้ SignalR DisConnect" VerticalOptions="Center" Grid.Column="1" Grid.Row="1" />
+        </Grid>
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <Grid.RowDefinition Height="2*" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" >
+                            <CheckBox  x:Name="checkBox1" CheckedChanged="OnCheckBoxCheckedChanged" />
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*" >
+                            <Label Text="Resume แอพแล้วให้ SignalR  Connect " VerticalOptions="Center" />
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                </Grid.RowDefinition>
+
+                -->
+        <!--<RowDefinition Height="2*" >
+                    <Label Text="Resume แอพแล้วให้ SignalR  Connect " VerticalOptions="Center" />
+                </RowDefinition>-->
+        <!--
+            </Grid.RowDefinitions>
+        </Grid>-->
+        <!--<Grid>
+            <Label Text="ย่อแอพแล้วไม่ให้ SignalR DisConnect" VerticalOptions="Center" />
+            <CheckBox x:Name="checkBox2" CheckedChanged="OnCheckBoxCheckedChanged2" />
+        </Grid>-->
+        <Entry x:Name="userSend"
+               Placeholder="Login"
+               WidthRequest="500"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start" />
+        <!--<Entry x:Name="userReceive"
+               Placeholder="userReceive"
+               WidthRequest="500"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start" />
+        <Entry x:Name="messageEntry"
+               Placeholder="Message"
+               WidthRequest="500"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start" />-->
+        <Button x:Name="loginButton"
+                IsEnabled="True"
+                Text="Login"
+                WidthRequest="500"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"
+                Clicked="LoginButton_ClickedAsync"/>
+        <!--<Button x:Name="sendToUserButton"
+                IsEnabled="True"
+                Text="SendToUser"
+                WidthRequest="500"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"
+                Clicked="SendToUserButton_ClickedAsync"/>
+        <Button x:Name="sendButton"
+                IsEnabled="True"
+                Text="SendAll"
+                WidthRequest="500"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"
+                Clicked="SendButton_ClickedAsync"/>-->
+        <Button x:Name="LogOut"
+                IsEnabled="True"
+                Text="Logout"
+                WidthRequest="500"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"
+                Clicked="Logout_ClickedAsync"/>
+        <!--<Button x:Name="connectButton"
+                Text="Connect"
+                WidthRequest="500"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="End"
+                Clicked="ConnectButton_ClickedAsync" />-->
+    </StackLayout>
+</ContentPage>

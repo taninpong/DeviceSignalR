@@ -12,7 +12,6 @@ namespace ChatClient
             signalR = App.signalR;
             signalR.Connected += SignalR_ConnectionChanged;
             signalR.ConnectionFailed += SignalR_ConnectionChanged;
-            //signalR.NewMessageReceived += SignalR_NewMessageReceived;
         }
 
         protected async override void OnAppearing()
@@ -38,29 +37,6 @@ namespace ChatClient
                 messageList.Children.Add(label);
             });
         }
-
-        //async void SignalR_NewMessageReceived(object sender, Model.Message message)
-        //{
-        //    string msg = "";
-        //    if (message.Text == "Disconnect Plese Check Network" || message.Text == "Connection Close")
-        //    {
-        //        msg = $"{message.Text}";
-        //        AddMessage(msg);
-        //    }
-        //    else if (message.Text == "Reconnected")
-        //    {
-        //        Device.BeginInvokeOnMainThread(() =>
-        //        {
-        //        });
-        //        msg = $"{message.Text}";
-        //        AddMessage(msg);
-        //    }
-        //    else
-        //    {
-        //        msg = $"{message.Text}";
-        //        AddMessage(msg);
-        //    }
-        //}
 
         void SignalR_ConnectionChanged(object sender, bool success, string message)
         {

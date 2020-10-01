@@ -24,26 +24,11 @@ namespace ChatClient
         public event ConnectionHandler ConnectionFailed;
         public bool IsConnected { get; private set; }
         public bool IsBusy { get; private set; }
-        private string username;
         public static HubConnection connection;
 
         public SignalRService()
         {
             client = new HttpClient();
-        }
-
-        public async Task SendMessageAsync(string username, string message)
-        {
-            IsBusy = true;
-            await connection.InvokeAsync("SendMessages", "broadcast ", message);
-            IsBusy = false;
-        }
-
-        public async Task SendMessageToUserAsync(string userreceive, string message)
-        {
-            IsBusy = true;
-            await connection.InvokeAsync("send user", userreceive, message);
-            IsBusy = false;
         }
 
         public async Task LogOut()
@@ -65,7 +50,7 @@ namespace ChatClient
                 }
 
                 IsBusy = true;
-                //"https://localhost:5001/ManagementSampleHub?user=gi"
+                //"https://signalabhub.azurewebsites.net/ManagementSampleHub?user=gi"
                 connection = new HubConnectionBuilder()
                     .WithUrl(Constants.HostName + "/ManagementSampleHub" + $"?user={userId}")
                     .AddNewtonsoftJsonProtocol()

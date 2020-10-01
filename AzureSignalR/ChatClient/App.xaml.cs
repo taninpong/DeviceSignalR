@@ -28,30 +28,26 @@ namespace ChatClient
 
         protected async override void OnSleep()
         {
-            if (shouldDisconnect == true)
+            if (shouldDisconnect)
             {
-                await signalR.LogOut();
+                await signalR.Disconnect();
             }
         }
 
         protected async override void OnResume()
         {
-            // เช็คได้
-            var ResultState = signalR.GetconnectionState();
-            //  conid อันเก่า
-            var ResultId = signalR.GetconnectionId();
-            var current = Connectivity.NetworkAccess;
+            var networkAccess = Connectivity.NetworkAccess;
 
-            if (shouldConnect == true)
+            if (shouldConnect)
             {
                 if (SignalRService.connection?.State == HubConnectionState.Disconnected)
                 {
-                    if (current == NetworkAccess.Internet)
+                    if (networkAccess == NetworkAccess.Internet)
                     {
                         Debug.WriteLine("NetworkAccess.Internet");
                         await signalR.ConnectToUserAsync(name);
                     }
-                    else if (current == NetworkAccess.None)
+                    else if (Connectivity.NetworkAccess == NetworkAccess.None)
                     {
                         Debug.WriteLine("NetworkAccess.None");
                     }

@@ -16,7 +16,6 @@ namespace ChatClient
 {
     public class SignalRService
     {
-        HttpClient client;
         public delegate void MessageReceivedHandler(object sender, Message message);
         public delegate void ConnectionHandler(object sender, bool successful, string message);
         public event MessageReceivedHandler NewMessageReceived;
@@ -26,16 +25,14 @@ namespace ChatClient
         public bool IsBusy { get; private set; }
         public static HubConnection connection;
 
-        public SignalRService()
-        {
-            client = new HttpClient();
-        }
 
-        public async Task LogOut()
+        public async Task Disconnect()
         {
-            var rrr = GetconnectionId();
-            await connection?.StopAsync();
-            AddNewMessage("", "DisConnect");
+            if (connection != null && connection.State != HubConnectionState.Disconnected)
+            {
+                await connection.StopAsync();
+                AddNewMessage("", "DisConnect");
+            }
         }
 
         public async Task ConnectToUserAsync(string userId)
@@ -50,7 +47,6 @@ namespace ChatClient
                 }
 
                 IsBusy = true;
-                //"https://signalabhub.azurewebsites.net/ManagementSampleHub?user=gi"
                 connection = new HubConnectionBuilder()
                     .WithUrl(Constants.HostName + "/ManagementSampleHub" + $"?user={userId}")
                     .AddNewtonsoftJsonProtocol()
@@ -75,7 +71,9 @@ namespace ChatClient
                     IsConnected = true;
                     Connected?.Invoke(this, true, "Connection successful.");
                 }
+
                 IsBusy = false;
+
                 connection.On<string>("Target", (message) =>
                 {
                     AddNewMessage("", message);
@@ -106,24 +104,8 @@ namespace ChatClient
             NewMessageReceived?.Invoke(this, messageModel);
         }
 
-        public string GetconnectionId()
-        {
-            var conid = connection?.ConnectionId;
-            return conid;
-        }
+        public string GetconnectionId() => connection?.ConnectionId;
 
-        public string GetconnectionState()
-        {
-            var conid = connection?.State.ToString();
-            return conid;
-        }
-
-        private CloudTable GetConnectionTable()
-        {
-            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=signalab;AccountKey=xbad3br/3o0AglWZ4iM1WdepVOlm9CSoMRmDbUlvFYmmUmJTlHF2hxqvsnC99fELsLvhQE1YzAi1x3mLOh9Yhg==;EndpointSuffix=core.windows.net");
-            var tableClient = storageAccount.CreateCloudTableClient();
-            return tableClient.GetTableReference("demotable2");
-        }
-
+        public string GetconnectionState() => connection?.State.ToString();
     }
 }

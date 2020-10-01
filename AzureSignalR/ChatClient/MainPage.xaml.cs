@@ -40,10 +40,7 @@ namespace ChatClient
 
         void SignalR_ConnectionChanged(object sender, bool success, string message)
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                AddMessage($"Server connection changed: {message}");
-            });
+            AddMessage($"Server connection changed: {message}");
         }
 
         async void LoginButton_ClickedAsync(object sender, EventArgs e)
@@ -55,7 +52,7 @@ namespace ChatClient
 
         async void Logout_ClickedAsync(object sender, EventArgs e)
         {
-            await signalR.LogOut();
+            await signalR.Disconnect();
         }
 
         void OnCheckBoxCheckedChanged(object sender, CheckedChangedEventArgs e)

@@ -24,7 +24,6 @@ namespace ChatClient
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected async override void OnSleep()
@@ -33,7 +32,6 @@ namespace ChatClient
             {
                 await signalR.LogOut();
             }
-            // Handle when your app sleeps
         }
 
         protected async override void OnResume()
@@ -43,7 +41,6 @@ namespace ChatClient
             //  conid อันเก่า
             var ResultId = signalR.GetconnectionId();
             var current = Connectivity.NetworkAccess;
-            // connection = null 
 
             if (shouldConnect == true)
             {
@@ -52,7 +49,6 @@ namespace ChatClient
                     if (current == NetworkAccess.Internet)
                     {
                         Debug.WriteLine("NetworkAccess.Internet");
-                        // Connection to internet is available
                         await signalR.ConnectToUserAsync(name);
                     }
                     else if (current == NetworkAccess.None)
@@ -63,7 +59,6 @@ namespace ChatClient
                     {
                         Debug.WriteLine("NetworkAccess.err");
                     }
-                    // Handle when your app resumes
                 }
             }
 

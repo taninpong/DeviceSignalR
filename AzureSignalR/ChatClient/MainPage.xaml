@@ -85,20 +85,6 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Start"
                 Clicked="LoginButton_ClickedAsync"/>
-        <!--<Button x:Name="sendToUserButton"
-                IsEnabled="True"
-                Text="SendToUser"
-                WidthRequest="500"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Start"
-                Clicked="SendToUserButton_ClickedAsync"/>
-        <Button x:Name="sendButton"
-                IsEnabled="True"
-                Text="SendAll"
-                WidthRequest="500"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Start"
-                Clicked="SendButton_ClickedAsync"/>-->
         <Button x:Name="LogOut"
                 IsEnabled="True"
                 Text="Logout"
@@ -106,11 +92,5 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Start"
                 Clicked="Logout_ClickedAsync"/>
-        <!--<Button x:Name="connectButton"
-                Text="Connect"
-                WidthRequest="500"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="End"
-                Clicked="ConnectButton_ClickedAsync" />-->
     </StackLayout>
 </ContentPage>

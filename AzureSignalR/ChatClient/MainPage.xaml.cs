@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Plugin.DeviceInfo;
 
 namespace ChatClient
 {
@@ -70,7 +71,8 @@ namespace ChatClient
 
         async void LoginButton_ClickedAsync(object sender, EventArgs e)
         {
-            App.id = DeviceInfo.Name;
+            App.id = CrossDeviceInfo.Current.Id;
+
             //App.id = Preferences.Get("my_id", string.Empty);
             //if (string.IsNullOrWhiteSpace(App.id))
             //{

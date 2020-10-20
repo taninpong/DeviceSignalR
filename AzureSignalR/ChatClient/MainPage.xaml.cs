@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ChatClient
@@ -12,6 +13,7 @@ namespace ChatClient
             signalR = App.signalR;
             signalR.Connected += SignalR_ConnectionChanged;
             signalR.ConnectionFailed += SignalR_ConnectionChanged;
+            signalR.NewMessageReceived += SignalR_NewMessageReceived;
         }
 
         protected async override void OnAppearing()
@@ -27,15 +29,38 @@ namespace ChatClient
         async void AddMessage(string message)
         {
             Device.BeginInvokeOnMainThread(() =>
+              {
+                  Label label = new Label
+                  {
+                      Text = message,
+                      HorizontalOptions = LayoutOptions.Start,
+                      VerticalOptions = LayoutOptions.Start
+                  };
+                  messageList.Children.Add(label);
+              });
+        }
+
+        async void SignalR_NewMessageReceived(object sender, Model.Message message)
+        {
+            string msg = "";
+            if (message.Text == "Disconnect Plese Check Network" || message.Text == "Connection Close")
             {
-                Label label = new Label
+                msg = $"{message.Text}";
+                AddMessage(msg);
+            }
+            else if (message.Text == "Reconnected")
+            {
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    Text = message,
-                    HorizontalOptions = LayoutOptions.Start,
-                    VerticalOptions = LayoutOptions.Start
-                };
-                messageList.Children.Add(label);
-            });
+                });
+                msg = $"{message.Text}";
+                AddMessage(msg);
+            }
+            else
+            {
+                msg = $"{message.Text}";
+                AddMessage(msg);
+            }
         }
 
         void SignalR_ConnectionChanged(object sender, bool success, string message)
@@ -45,8 +70,15 @@ namespace ChatClient
 
         async void LoginButton_ClickedAsync(object sender, EventArgs e)
         {
-            App.name = userSend.Text.ToString();
-            await signalR.ConnectToUserAsync(userSend.Text);
+            App.id = DeviceInfo.Name;
+            //App.id = Preferences.Get("my_id", string.Empty);
+            //if (string.IsNullOrWhiteSpace(App.id))
+            //{
+            //    App.id = System.Guid.NewGuid().ToString();
+            //    Preferences.Set("my_id", App.id);
+            //}
+            //App.name = userSend.Text.ToString();
+            await signalR.ConnectToUserAsync(App.id);
             AddMessage($"Server connection changed: LoginSuccess");
         }
 
@@ -66,5 +98,6 @@ namespace ChatClient
             checkBox2.IsChecked = e.Value;
             App.shouldDisconnect = e.Value;
         }
+
     }
 }

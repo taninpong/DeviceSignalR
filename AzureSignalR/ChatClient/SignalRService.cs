@@ -31,12 +31,13 @@ namespace ChatClient
             if (connection != null && connection.State != HubConnectionState.Disconnected)
             {
                 await connection.StopAsync();
-                AddNewMessage("", "DisConnect");
+                AddNewMessage("", $"DisConnect {DateTime.UtcNow.ToString("HH: mm:ss.fff tt") }");
             }
         }
 
         public async Task ConnectToUserAsync(string userId)
         {
+            var date = DateTime.UtcNow.ToString("HH: mm:ss.fff tt");
             try
             {
                 if (IsBusy) return;
@@ -57,7 +58,7 @@ namespace ChatClient
 
                 connection.Closed += async (err) =>
                 {
-                    AddNewMessage("", "Connection Close");
+                    AddNewMessage("", $"Connection Close {date}");
                 };
 
 
@@ -69,15 +70,16 @@ namespace ChatClient
                 else
                 {
                     IsConnected = true;
-                    Connected?.Invoke(this, true, "Connection successful.");
+                    Connected?.Invoke(this, true, $"Connection successful. {date}");
                 }
 
                 IsBusy = false;
 
                 connection.On<string>("Target", (message) =>
                 {
-                    AddNewMessage("", message);
-                    Debug.WriteLine(message);
+                    var newmess = message + "|" + DateTime.UtcNow.ToString("HH: mm:ss.fff tt");
+                    AddNewMessage("", newmess);
+                    Debug.WriteLine(newmess);
                 });
 
                 connection.Reconnected += async connectionId =>

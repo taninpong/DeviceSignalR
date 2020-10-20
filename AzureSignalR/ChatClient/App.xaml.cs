@@ -13,7 +13,7 @@ namespace ChatClient
         public static string name = "";
         public static bool shouldConnect = false;
         public static bool shouldDisconnect = false;
-
+        public static string id = "";
 
         public App()
         {
@@ -45,7 +45,7 @@ namespace ChatClient
                     if (networkAccess == NetworkAccess.Internet)
                     {
                         Debug.WriteLine("NetworkAccess.Internet");
-                        await signalR.ConnectToUserAsync(name);
+                        await signalR.ConnectToUserAsync(id);
                     }
                     else if (Connectivity.NetworkAccess == NetworkAccess.None)
                     {

@@ -78,8 +78,8 @@ namespace ChatClient
                 connection.On<string>("Target", (message) =>
                 {
                     var newmess = message + "|" + DateTime.UtcNow.ToString("HH: mm:ss.fff tt");
-                    AddNewMessage("", newmess);
-                    Debug.WriteLine(newmess);
+                    AddNewMessage("", message);
+                    Debug.WriteLine(message);
                 });
 
                 connection.Reconnected += async connectionId =>

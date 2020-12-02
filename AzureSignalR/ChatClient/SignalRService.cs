@@ -96,7 +96,7 @@ namespace ChatClient
             }
         }
 
-        void AddNewMessage(string user, string message)
+        public void AddNewMessage(string user, string message)
         {
             Message messageModel = new Message
             {

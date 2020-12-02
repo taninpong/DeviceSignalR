@@ -17,6 +17,7 @@ namespace ChatClient
         public static bool shouldDisconnect = false;
         public static string id = "";
         private static CancellationTokenSource cts = new CancellationTokenSource();
+        public static int SleepTime = 0;
 
         public App()
         {
@@ -32,21 +33,34 @@ namespace ChatClient
         protected async override void OnSleep()
         {
             cts = new CancellationTokenSource();
+            TimeTicker(cts.Token);
             await DisconnectSignalRInTime(cts.Token);
+        }
+
+        private static async Task TimeTicker(CancellationToken cancellationToken)
+        {
+            while (true)
+            {
+                if (cancellationToken.IsCancellationRequested) break;
+                await Task.Delay(1000);
+                SleepTime++;
+            }
         }
 
         private static async Task DisconnectSignalRInTime(CancellationToken cancellationToken)
         {
-            await Task.Delay(9000);
+            await Task.Delay(15000);
             if (shouldDisconnect && !cancellationToken.IsCancellationRequested)
             {
                 await signalR.Disconnect();
             }
+            signalR.AddNewMessage("",SleepTime.ToString());
         }
 
         protected async override void OnResume()
         {
             cts.Cancel();
+            SleepTime = 0;
             var networkAccess = Connectivity.NetworkAccess;
 
             if (shouldConnect)

@@ -3,6 +3,8 @@ using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using System.Diagnostics;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Tasks;
+using System.Threading;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ChatClient
@@ -14,6 +16,7 @@ namespace ChatClient
         public static bool shouldConnect = false;
         public static bool shouldDisconnect = false;
         public static string id = "";
+        private static CancellationTokenSource cts = new CancellationTokenSource();
 
         public App()
         {
@@ -28,7 +31,14 @@ namespace ChatClient
 
         protected async override void OnSleep()
         {
-            if (shouldDisconnect)
+            cts = new CancellationTokenSource();
+            await DisconnectSignalRInTime(cts.Token);
+        }
+
+        private static async Task DisconnectSignalRInTime(CancellationToken cancellationToken)
+        {
+            await Task.Delay(9000);
+            if (shouldDisconnect && !cancellationToken.IsCancellationRequested)
             {
                 await signalR.Disconnect();
             }
@@ -36,6 +46,7 @@ namespace ChatClient
 
         protected async override void OnResume()
         {
+            cts.Cancel();
             var networkAccess = Connectivity.NetworkAccess;
 
             if (shouldConnect)

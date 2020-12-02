@@ -44,6 +44,7 @@ namespace ChatClient
                 if (cancellationToken.IsCancellationRequested) break;
                 await Task.Delay(1000);
                 SleepTime++;
+                signalR.AddNewMessage("", SleepTime.ToString());
             }
         }
 
@@ -54,7 +55,6 @@ namespace ChatClient
             {
                 await signalR.Disconnect();
             }
-            signalR.AddNewMessage("",SleepTime.ToString());
         }
 
         protected async override void OnResume()
